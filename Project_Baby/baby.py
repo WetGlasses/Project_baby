@@ -1,10 +1,12 @@
 import cv2
-
+import os
 from keras.models import load_model
 import numpy as np
 from keras.applications.imagenet_utils import decode_predictions
 from keras.preprocessing import image
+import subprocess
 
+notify_for = ['cellular_telephone', 'water_bottle', 'remote_control']
 def preprocess_input(x):
     #x /= 255.
     x = np.true_divide(x,255.0)
@@ -62,15 +64,23 @@ def recognition(image):
     except:
         print('Handled an error')
 
-    if((len(name_list)>0)&(x_name != name_list)):
-        print(name_list)
-        x_name = name_list
+    if(len(name_list)>0):
+        if(x_name != name_list[0]):
+            print(name_list[0])
+
+            if(name_list[0] in notify_for):
+                _speech_cmd = 'espeak -v en-us ' + name_list[0] + ' -s 120'
+                #os.system(_speech_cmd)
+                _speech_cmd = _speech_cmd.split(" ")
+                subprocess.Popen(_speech_cmd)
+
+            x_name = name_list[0]
 
 print('Loading Model')
-model = load_model('inceptionv3.h5')
+model = load_model('Inception_whole.h5')
 print('Model Loaded. I am ready to open my eyes now..')
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 cv2.namedWindow('Raw')
 
 while(True):

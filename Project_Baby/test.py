@@ -9,7 +9,7 @@ def preprocess_input(x):
     x *= 2.
     return x
 
-model = load_model('inceptionv3.h5')
+model = load_model('Inception_whole.h5')
 img_path = 'dog_cat.jpg'
 img = image.load_img(img_path, target_size=(299, 299))
 x = image.img_to_array(img)
