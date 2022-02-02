@@ -80,7 +80,7 @@ print('Loading Model')
 model = load_model('Inception_whole.h5')
 print('Model Loaded. I am ready to open my eyes now..')
 
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 cv2.namedWindow('Raw')
 
 while(True):
